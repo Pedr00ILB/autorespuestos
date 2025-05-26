@@ -27,11 +27,14 @@ function ErrorFallback({ error }: { error: Error }) {
 // Component que fija la cámara en su posición inicial
 function CameraSetup() {
   const { camera } = useThree();
+  
   useEffect(() => {
-    camera.position.set(5, 1, 10); // más abajo en Y (1 en lugar de 2)
-    camera.lookAt(0, 0.5, 0);
+    // Configurar la posición de la cámara
+    camera.position.set(5, 3.5, 10); // Altura reducida a 3.5
+    camera.lookAt(0, 0, 0);
     camera.updateProjectionMatrix();
   }, [camera]);
+
   return null;
 }
 
@@ -56,8 +59,8 @@ export default function Scene() {
               shadows={{ type: 'contact', opacity: 0.4, blur: 2 }}
               adjustCamera={false} // evita el “auto‐frame” de Stage
             >
-              {/* Bajar el coche 0.3 unidades en Y y girarlo -15° en Y */}
-              <group position={[0, -0.3, 0]} rotation={[0, -Math.PI / 12, 0]}>
+              {/* Rotación inicial de -15° + 270° + 270° + 270° = 795° (13.87 radianes) */}
+              <group position={[0, -0.3, 0]} rotation={[0, -Math.PI / 12 + 13.87, 0]}>
                 <CarEmbedded mouseX={mouseX} />
               </group>
             </Stage>

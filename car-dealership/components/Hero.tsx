@@ -1,12 +1,13 @@
 'use client';
 
 import Scene from './Scene';
-import { useRef, useEffect } from 'react';
+import { useRef, useEffect, useState } from 'react';
 
 export default function Hero() {
   const videoRef = useRef<HTMLVideoElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const sceneRef = useRef<HTMLDivElement>(null);
+  const [isInitialLoad, setIsInitialLoad] = useState(true);
 
   useEffect(() => {
     const video = videoRef.current;
@@ -24,6 +25,19 @@ export default function Hero() {
       
       container.style.height = `${newHeight}px`;
       scene.style.height = `${newHeight}px`;
+      
+      // Ajuste para que ocupe todo el ancho de la ventana
+      if (isInitialLoad) {
+        container.style.width = '100%';
+        container.style.margin = '0';
+        container.style.maxWidth = '100%';
+        container.style.position = 'relative';
+        container.style.left = '50%';
+        container.style.transform = 'translateX(-50%)';
+        setIsInitialLoad(false);
+        // Actualizar altura con el nuevo ancho
+        requestAnimationFrame(updateHeight);
+      }
     };
 
     // Actualizar cuando el video cargue
@@ -41,7 +55,7 @@ export default function Hero() {
       video.removeEventListener('loadedmetadata', updateHeight);
       window.removeEventListener('resize', updateHeight);
     };
-  }, []);
+  }, [isInitialLoad]);
 
   return (
     <div
