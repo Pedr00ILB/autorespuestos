@@ -7,27 +7,14 @@ import CarCard from '@/components/car-card';
 import AccessoryCard from '@/components/accessory-card';
 import ServiceCard from '@/components/service-card';
 import { cars, accessories, services } from '@/lib/data';
-
+import Hero from '@/components/Hero';
 import Scene from '@/components/Scene';
 
 export default function Home() {
   return (
     <main className='flex flex-col min-h-screen'>
-      {/* Hero — solo el carro 3D en un div w-full */}
-      <section
-        className='w-full h-[650px] flex items-center justify-center'
-        style={{
-          backgroundImage: "url('/imagesssss.jpg')",
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-          backgroundRepeat: 'no-repeat',
-        }}
-      >
-        <div className='w-full max-w-6xl aspect-video overflow-hidden '>
-          {/* Aquí se monta tu CarPage con el Scene dentro */}
-          <Scene />
-        </div>
-      </section>
+      {/* Hero con video */}
+      <Hero />
 
       {/* Featured Cars */}
       <section className='py-16 bg-white'>

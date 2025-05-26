@@ -1,3 +1,6 @@
+'use client';
+
+import { useRef, useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
@@ -11,10 +14,10 @@ import {
   ChevronLeft,
   Fuel,
   Gauge,
-  Info,
-  Settings,
-  Shield,
 } from 'lucide-react';
+import CarSteeringAllWheels from '@/components/Car';
+import { Canvas } from '@react-three/fiber';
+import { Stage } from '@react-three/drei';
 import AddToCartButton from '@/components/add-to-cart-button';
 import BuyNowButton from '@/components/buy-now-button';
 
@@ -26,13 +29,23 @@ interface CarDetailPageProps {
 
 export default function CarDetailPage({ params }: CarDetailPageProps) {
   const car = cars.find((c) => c.id === params.id);
+  const mouseX = useRef(0);
+
+  useEffect(() => {
+    const handleMouseMove = (e: MouseEvent) => {
+      mouseX.current = (e.clientX / window.innerWidth) * 2 - 1;
+    };
+
+    window.addEventListener('mousemove', handleMouseMove);
+    return () => window.removeEventListener('mousemove', handleMouseMove);
+  }, []);
 
   if (!car) {
     notFound();
   }
 
   // Características adicionales del carro (datos ficticios)
-  const features = [
+  const memoizedFeatures = useMemo(() => [
     { name: 'Transmisión', value: 'Automática' },
     { name: 'Motor', value: '2.0L Turbo' },
     { name: 'Potencia', value: '180 HP' },
@@ -41,7 +54,7 @@ export default function CarDetailPage({ params }: CarDetailPageProps) {
     { name: 'Asientos', value: '5' },
     { name: 'Color exterior', value: 'Plata metálico' },
     { name: 'Color interior', value: 'Negro' },
-  ];
+  ], []);
 
   return (
     <div className='container mx-auto px-4 py-8'>
@@ -58,21 +71,30 @@ export default function CarDetailPage({ params }: CarDetailPageProps) {
         <div className='space-y-4'>
           <div className='relative h-[300px] md:h-[400px] w-full rounded-lg overflow-hidden border'>
             <Image
-              src={car.image || '/placeholder.svg?height=400&width=600'}
+              src={car.image || '/placeholder.svg?height=80&width=120&text=Foto'}
               alt={`${car.brand} ${car.model}`}
               fill
               className='object-cover'
+              loading="lazy"
             />
             {car.isNew && (
               <Badge className='absolute top-4 right-4 bg-red-600'>Nuevo</Badge>
             )}
           </div>
 
+          <div className='relative h-[300px] md:h-[400px] w-full rounded-lg overflow-hidden border'>
+            <Canvas>
+              <Stage intensity={0.5} environment="city">
+                <CarSteeringAllWheels mouseX={mouseX} />
+              </Stage>
+            </Canvas>
+          </div>
+
           <div className='grid grid-cols-4 gap-2'>
             {/* Imágenes en miniatura (usando la misma imagen para demostración) */}
             {[1, 2, 3, 4].map((i) => (
               <div
-                key={i}
+                key={`thumbnail-${i}`}
                 className='relative h-20 rounded-md overflow-hidden border cursor-pointer hover:opacity-80'
               >
                 <Image
@@ -100,11 +122,7 @@ export default function CarDetailPage({ params }: CarDetailPageProps) {
 
           <div className='flex items-center justify-between'>
             <p className='text-3xl font-bold'>${car.price.toLocaleString()}</p>
-            {car.isNew ? (
-              <Badge className='bg-green-600'>Nuevo</Badge>
-            ) : (
-              <Badge variant='outline'>Usado</Badge>
-            )}
+            <MemoizedBadge isNew={car.isNew} />
           </div>
 
           <div className='grid grid-cols-2 gap-4 py-4 border-y'>

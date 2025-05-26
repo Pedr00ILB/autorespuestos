@@ -6,13 +6,13 @@ import Link from "next/link"
 
 export default function LoginPage() {
   return (
-    <div className="container flex h-screen items-center justify-center">
-      <Card className="mx-auto max-w-sm">
-        <CardHeader className="space-y-1">
-          <CardTitle className="text-2xl font-bold">Iniciar Sesión</CardTitle>
-          <CardDescription>Ingresa tus credenciales para acceder a tu cuenta</CardDescription>
+    <div className="min-h-screen w-full flex items-center justify-center px-4 py-12">
+      <Card className="w-full max-w-md mx-auto shadow-lg">
+        <CardHeader className="space-y-2">
+          <CardTitle className="text-2xl font-bold text-center">Iniciar Sesión</CardTitle>
+          <CardDescription className="text-center">Ingresa tus credenciales para acceder a tu cuenta</CardDescription>
         </CardHeader>
-        <CardContent>
+        <CardContent className="px-6">
           <div className="space-y-4">
             <div className="space-y-2">
               <Label htmlFor="email">Email</Label>

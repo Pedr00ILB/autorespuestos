@@ -7,13 +7,13 @@ import Link from "next/link"
 
 export default function RegisterPage() {
   return (
-    <div className="container flex h-screen items-center justify-center">
-      <Card className="mx-auto max-w-sm">
-        <CardHeader className="space-y-1">
-          <CardTitle className="text-2xl font-bold">Crear una cuenta</CardTitle>
-          <CardDescription>Ingresa tus datos para registrarte en nuestra plataforma</CardDescription>
+    <div className="min-h-screen w-full flex items-center justify-center px-4 py-12">
+      <Card className="w-full max-w-md mx-auto shadow-lg">
+        <CardHeader className="space-y-2">
+          <CardTitle className="text-2xl font-bold text-center">Crear una cuenta</CardTitle>
+          <CardDescription className="text-center">Ingresa tus datos para registrarte en nuestra plataforma</CardDescription>
         </CardHeader>
-        <CardContent className="space-y-4">
+        <CardContent className="space-y-4 px-6">
           <div className="grid grid-cols-2 gap-4">
             <div className="space-y-2">
               <Label htmlFor="firstName">Nombre</Label>
@@ -46,7 +46,7 @@ export default function RegisterPage() {
             </Label>
           </div>
         </CardContent>
-        <CardFooter className="flex flex-col">
+        <CardFooter className="flex flex-col px-6 pb-6">
           <Button className="w-full">Registrarse</Button>
           <p className="mt-4 text-center text-sm">
             ¿Ya tienes una cuenta?{" "}

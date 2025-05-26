@@ -11,8 +11,8 @@ import {
 import { Badge } from '@/components/ui/badge';
 import { Car, Fuel, Calendar, Gauge } from 'lucide-react';
 import Link from 'next/link';
-import AddToCartButton from '@/components/add-to-cart-button';
 import BuyNowButton from '@/components/buy-now-button';
+import { Button } from '@/components/ui/button';
 
 interface CarCardProps {
   car: {
@@ -47,60 +47,32 @@ export default function CarCard({ car }: CarCardProps) {
       </CardHeader>
 
       <CardContent className='p-4'>
-        <div className='flex justify-between items-start mb-2'>
-          <div>
-            <h3 className='font-bold text-lg'>
-              {car.brand} {car.model}
-            </h3>
-            <p className='text-gray-500'>{car.year}</p>
-          </div>
-          <div className='text-right'>
-            <p className='font-bold text-lg'>
-              ${car.priceMLC.toLocaleString()} MLC
-            </p>
-            {car.priceCUP !== null && (
-              <p className='text-sm text-gray-500'>
-                {car.priceCUP.toLocaleString()} CUP
-              </p>
-            )}
-          </div>
-        </div>
-
-        <div className='grid grid-cols-2 gap-2 mt-4'>
-          <div className='flex items-center gap-1 text-sm text-gray-500'>
-            <Gauge className='h-4 w-4' />
-            <span>
-              {car.mileage !== null
-                ? `${car.mileage.toLocaleString()} km`
-                : '—'}
-            </span>
-          </div>
-          <div className='flex items-center gap-1 text-sm text-gray-500'>
+        <div className='space-y-2'>
+          <h3 className='text-lg font-semibold'>{car.brand} {car.model}</h3>
+          <p className='text-gray-500'>Año: {car.year}</p>
+          {car.mileage !== null && (
+            <p className='text-gray-500'>Kilometraje: {car.mileage} km</p>
+          )}
+          <div className='flex items-center gap-2 text-gray-500'>
             <Fuel className='h-4 w-4' />
             <span>{car.fuel}</span>
           </div>
-          <div className='flex items-center gap-1 text-sm text-gray-500'>
-            <Calendar className='h-4 w-4' />
-            <span>{car.year}</span>
-          </div>
-          <div className='flex items-center gap-1 text-sm text-gray-500'>
-            <Car className='h-4 w-4' />
-            <span>Automático</span>
+          <div className='flex items-center justify-between'>
+            <div className='flex items-center gap-2'>
+              <Calendar className='h-4 w-4' />
+              <span className='text-gray-500'>Año: {car.year}</span>
+            </div>
+            <div className='flex items-center gap-2'>
+              <Gauge className='h-4 w-4' />
+              <span className='font-bold'>${car.priceMLC.toLocaleString()} MLC</span>
+            </div>
           </div>
         </div>
       </CardContent>
 
       <CardFooter className='flex gap-2 p-4 pt-0'>
-        <Link href={`/carro/${car.id}`} className='flex-1'>
-          <AddToCartButton
-            id={car.id}
-            name={`${car.brand} ${car.model}`}
-            price={car.priceMLC}
-            image={car.image}
-            type='car'
-            variant='outline'
-            className='w-full'
-          />
+        <Link href={`/vehiculos/${car.id}`} className='flex-1'>
+          <Button variant='outline' className='w-full'>Ver detalles</Button>
         </Link>
         <BuyNowButton
           id={car.id}

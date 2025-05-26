@@ -109,7 +109,9 @@ export default function AccesoriosPage() {
         <TabsContent value="Todos" className="mt-6">
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
             {allAccessories.map((accessory) => (
-              <AccessoryCard key={accessory.id} accessory={accessory} />
+              <div key={`${accessory.id}-${accessory.name}-${accessory.category}`} className="h-full">
+                <AccessoryCard accessory={accessory} />
+              </div>
             ))}
           </div>
         </TabsContent>
@@ -120,7 +122,9 @@ export default function AccesoriosPage() {
               {allAccessories
                 .filter((accessory) => accessory.category === category)
                 .map((accessory) => (
-                  <AccessoryCard key={accessory.id} accessory={accessory} />
+                  <div key={`${accessory.id}-${accessory.name}-${accessory.category}`} className="h-full">
+                    <AccessoryCard accessory={accessory} />
+                  </div>
                 ))}
             </div>
           </TabsContent>

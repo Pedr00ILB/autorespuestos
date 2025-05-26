@@ -4,6 +4,7 @@ import React from 'react';
 import Image from 'next/image';
 import { useCart, type CartItemType } from '@/lib/cart-context';
 import { Button } from '@/components/ui/button';
+import Link from 'next/link';
 import {
   Card,
   CardContent,
@@ -133,9 +134,9 @@ function AddToCartBtn({ pieza }: { pieza: (typeof piezas)[0] }) {
     addItem(item);
   };
   return (
-    <Button onClick={handleAdd} className='w-full'>
-      <ShoppingCart className='mr-2 h-4 w-4' />
-      Añadir al Carrito
+    <Button onClick={handleAdd} className='w-full h-9 text-xs sm:text-sm' size="sm">
+      <ShoppingCart className='mr-1 h-3 w-3' />
+      Añadir
     </Button>
   );
 }
@@ -205,7 +206,7 @@ export default function PiezasPage() {
                           </span>
                         )}
                       </div>
-                      <p className='text-xs text-gray-500 mb-4'>
+                      <p className='text-xs text-gray-500 mb-2'>
                         {pieza.stock > 20
                           ? 'En stock'
                           : pieza.stock > 5
@@ -213,8 +214,19 @@ export default function PiezasPage() {
                           : 'Últimas unidades'}
                       </p>
                     </CardContent>
-                    <CardFooter className='p-4 pt-0'>
-                      <AddToCartBtn pieza={pieza} />
+                    <CardFooter className='p-3 pt-0 flex flex-col sm:flex-row gap-2'>
+                      <Link href={`/piezas/${pieza.id}`} className='w-full'>
+                        <Button 
+                          variant='outline' 
+                          className='w-full h-9 text-xs sm:text-sm'
+                          size="sm"
+                        >
+                          Ver detalles
+                        </Button>
+                      </Link>
+                      <div className='w-full'>
+                        <AddToCartBtn pieza={pieza} />
+                      </div>
                     </CardFooter>
                   </Card>
                 ))}

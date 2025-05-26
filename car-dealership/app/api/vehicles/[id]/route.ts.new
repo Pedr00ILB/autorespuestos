@@ -1,0 +1,97 @@
+import { NextResponse } from 'next/server';
+
+interface Vehicle {
+  id: string;
+  brand: string;
+  model: string;
+  year: number;
+  mileage: number | null;
+  fuel: string;
+  priceMLC: number;
+  priceCUP: number | null;
+  images: string[];
+  description: string;
+  specifications: {
+    engine: string;
+    transmission: string;
+    color: string;
+    seats: number;
+    features: string[];
+  };
+}
+
+const vehicles: Record<string, Vehicle> = {
+  '1': {
+    id: '1',
+    brand: 'Toyota',
+    model: 'Corolla',
+    year: 2023,
+    mileage: 10000,
+    fuel: 'Gasolina',
+    priceMLC: 25000,
+    priceCUP: null,
+    images: [
+      '/vehicles/toyota-corolla-1.jpg',
+      '/vehicles/toyota-corolla-2.jpg',
+      '/vehicles/toyota-corolla-3.jpg'
+    ],
+    description: 'Toyota Corolla 2023 en excelente estado. Vehículo con mantenimiento al día y historial de servicio completo.',
+    specifications: {
+      engine: '1.8L 4 cilindros',
+      transmission: 'Automática',
+      color: 'Blanco',
+      seats: 5,
+      features: [
+        'Aire acondicionado',
+        'Dirección asistida',
+        'Vidrios eléctricos',
+        'Cierre centralizado',
+        'Rines de aleación'
+      ]
+    }
+  },
+  '2': {
+    id: '2',
+    brand: 'Honda',
+    model: 'Civic',
+    year: 2022,
+    mileage: 15000,
+    fuel: 'Gasolina',
+    priceMLC: 22000,
+    priceCUP: null,
+    images: [
+      '/vehicles/honda-civic-1.jpg',
+      '/vehicles/honda-civic-2.jpg',
+      '/vehicles/honda-civic-3.jpg'
+    ],
+    description: 'Honda Civic 2022 en perfecto estado. Bajo kilometraje y excelente rendimiento de combustible.',
+    specifications: {
+      engine: '1.5L Turbo',
+      transmission: 'Automática CVT',
+      color: 'Gris',
+      seats: 5,
+      features: [
+        'Aire acondicionado',
+        'Cámara de retroceso',
+        'Bluetooth',
+        'Control de crucero',
+        'Pantalla táctil'
+      ]
+    }
+  }
+};
+
+export async function GET(request: Request, { params }: { params: { id: string } }) {
+  const { id } = params;
+
+  if (!id) {
+    return NextResponse.json({ error: 'ID is required' }, { status: 400 });
+  }
+
+  const vehicle = vehicles[id];
+  if (!vehicle) {
+    return NextResponse.json({ error: 'Vehicle not found' }, { status: 404 });
+  }
+
+  return NextResponse.json(vehicle);
+}

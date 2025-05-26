@@ -607,8 +607,9 @@ export interface Accessory {
   id: string;
   name: string;
   price: number;
-  image: string;
+  images: string[];
   category: string;
+  description: string;
 }
 
 export const accessories: Accessory[] = [
@@ -616,351 +617,551 @@ export const accessories: Accessory[] = [
     id: '1',
     name: 'Tapetes de Goma',
     price: 120,
-    image: '/placeholder.svg?height=160&width=240',
+    images: [
+      '/accesorios/tapetes-1.jpg',
+      '/accesorios/tapetes-2.jpg',
+      '/accesorios/tapetes-3.jpg'
+    ],
     category: 'Interior',
+    description: 'Tapetes de goma de alta calidad para proteger el interior de tu vehículo. Diseñados para un ajuste perfecto y fácil limpieza.',
   },
   {
     id: '2',
     name: 'Portaequipaje',
     price: 350,
-    image: '/placeholder.svg?height=160&width=240',
+    images: [
+      '/accesorios/portaequipaje-1.jpg',
+      '/accesorios/portaequipaje-2.jpg'
+    ],
     category: 'Exterior',
+    description: 'Portaequipaje de aluminio ligero con capacidad para hasta 50kg. Instalación rápida y fácil.',
   },
   {
     id: '3',
     name: 'Sistema de Sonido Premium',
     price: 800,
-    image: '/placeholder.svg?height=160&width=240',
+    images: [
+      '/accesorios/sonido-1.jpg',
+      '/accesorios/sonido-2.jpg'
+    ],
     category: 'Electrónica',
+    description: 'Sistema de sonido premium con 6 parlantes, subwoofer y pantalla táctil de 7". Conectividad Bluetooth y USB.',
   },
   {
     id: '4',
     name: 'Asientos de Cuero',
     price: 1200,
-    image: '/placeholder.svg?height=160&width=240',
+    images: [
+      '/accesorios/asientos-1.jpg',
+      '/accesorios/asientos-2.jpg'
+    ],
     category: 'Interior',
+    description: 'Asientos de cuero de alta calidad con costuras en contraste. Diseño ergonómico y cómodo.',
   },
   {
     id: '5',
     name: 'Funda de Volante',
     price: 90,
-    image: '/placeholder.svg?height=160&width=240',
+    images: [
+      '/accesorios/funda-volante.jpg'
+    ],
     category: 'Interior',
+    description: 'Funda de volante de cuero sintético con diseño elegante y ajuste perfecto.',
   },
   {
     id: '6',
-    name: 'Cubreasientos de Tela',
-    price: 200,
-    image: '/placeholder.svg?height=160&width=240',
+    name: 'Tapetes de Goma',
+    price: 120,
+    images: [
+      '/accesorios/tapetes-1.jpg',
+      '/accesorios/tapetes-2.jpg',
+      '/accesorios/tapetes-3.jpg'
+    ],
     category: 'Interior',
+    description: 'Tapetes de goma de alta calidad para proteger el interior de tu vehículo. Diseñados para un ajuste perfecto y fácil limpieza.',
   },
   {
     id: '7',
-    name: 'Organizador de Cajuela',
-    price: 150,
-    image: '/placeholder.svg?height=160&width=240',
-    category: 'Interior',
+    name: 'Portaequipaje',
+    price: 350,
+    images: [
+      '/accesorios/portaequipaje-1.jpg',
+      '/accesorios/portaequipaje-2.jpg'
+    ],
+    category: 'Exterior',
+    description: 'Portaequipaje de aluminio ligero con capacidad para hasta 50kg. Instalación rápida y fácil.',
   },
   {
     id: '8',
-    name: 'Protector de Tablero',
-    price: 180,
-    image: '/placeholder.svg?height=160&width=240',
-    category: 'Interior',
+    name: 'Sistema de Sonido Premium',
+    price: 800,
+    images: [
+      '/accesorios/sonido-1.jpg',
+      '/accesorios/sonido-2.jpg'
+    ],
+    category: 'Electrónica',
+    description: 'Sistema de sonido premium con 6 parlantes, subwoofer y pantalla táctil de 7". Conectividad Bluetooth y USB.',
   },
   {
     id: '9',
-    name: 'Sombrilla para Parabrisas',
-    price: 60,
-    image: '/placeholder.svg?height=160&width=240',
-    category: 'Exterior',
+    name: 'Asientos de Cuero',
+    price: 1200,
+    images: [
+      '/accesorios/asientos-1.jpg',
+      '/accesorios/asientos-2.jpg'
+    ],
+    category: 'Interior',
+    description: 'Asientos de cuero de alta calidad con costuras en contraste. Diseño ergonómico y cómodo.',
   },
   {
     id: '10',
-    name: 'Cortinas Laterales',
-    price: 70,
-    image: '/placeholder.svg?height=160&width=240',
-    category: 'Exterior',
+    name: 'Funda de Volante',
+    price: 90,
+    images: [
+      '/accesorios/funda-volante.jpg'
+    ],
+    category: 'Interior',
+    description: 'Funda de volante de cuero sintético con diseño elegante y ajuste perfecto.',
   },
   {
     id: '11',
-    name: 'Deflectores de Ventana',
-    price: 250,
-    image: '/placeholder.svg?height=160&width=240',
-    category: 'Exterior',
+    name: 'Cubreasientos de Tela',
+    price: 200,
+    images: [
+      '/accesorios/cubreasientos-1.jpg',
+      '/accesorios/cubreasientos-2.jpg'
+    ],
+    category: 'Interior',
+    description: 'Cubreasientos de tela de alta calidad con diseño elegante y fácil limpieza.',
   },
   {
     id: '12',
-    name: 'Bidón de Combustible',
-    price: 40,
-    image: '/placeholder.svg?height=160&width=240',
-    category: 'Exterior',
+    name: 'Organizador de Cajuela',
+    price: 150,
+    images: [
+      '/accesorios/organizador-1.jpg',
+      '/accesorios/organizador-2.jpg'
+    ],
+    category: 'Interior',
+    description: 'Organizador de cajuela con compartimentos para herramientas y objetos personales.',
   },
   {
     id: '13',
-    name: 'Rieles de Techo',
-    price: 350,
-    image: '/placeholder.svg?height=160&width=240',
-    category: 'Exterior',
+    name: 'Protector de Tablero',
+    price: 180,
+    images: [
+      '/accesorios/protector-1.jpg',
+      '/accesorios/protector-2.jpg'
+    ],
+    category: 'Interior',
+    description: 'Protector de tablero de alta calidad para proteger el interior de tu vehículo.',
   },
   {
     id: '14',
-    name: 'Barras Portaequipaje',
-    price: 300,
-    image: '/placeholder.svg?height=160&width=240',
+    name: 'Sombrilla para Parabrisas',
+    price: 60,
+    images: [
+      '/accesorios/sombrilla-1.jpg',
+      '/accesorios/sombrilla-2.jpg'
+    ],
     category: 'Exterior',
+    description: 'Sombrilla para parabrisas de alta calidad para proteger el interior de tu vehículo.',
   },
   {
     id: '15',
-    name: 'Espejos Retrovisores LED',
-    price: 400,
-    image: '/placeholder.svg?height=160&width=240',
-    category: 'Electrónica',
+    name: 'Cortinas Laterales',
+    price: 70,
+    images: [
+      '/accesorios/cortinas-1.jpg',
+      '/accesorios/cortinas-2.jpg'
+    ],
+    category: 'Exterior',
+    description: 'Cortinas laterales de alta calidad para proteger el interior de tu vehículo.',
   },
   {
     id: '16',
-    name: 'Luces LED de Cortesía',
-    price: 150,
-    image: '/placeholder.svg?height=160&width=240',
-    category: 'Iluminación',
+    name: 'Deflectores de Ventana',
+    price: 250,
+    images: [
+      '/accesorios/deflectores-1.jpg',
+      '/accesorios/deflectores-2.jpg'
+    ],
+    category: 'Exterior',
+    description: 'Deflectores de ventana de alta calidad para proteger el interior de tu vehículo.',
   },
   {
     id: '17',
-    name: 'Luces Antiniebla',
-    price: 220,
-    image: '/placeholder.svg?height=160&width=240',
-    category: 'Iluminación',
+    name: 'Bidón de Combustible',
+    price: 40,
+    images: [
+      '/accesorios/bidon-1.jpg',
+      '/accesorios/bidon-2.jpg'
+    ],
+    category: 'Exterior',
+    description: 'Bidón de combustible de alta calidad para proteger el interior de tu vehículo.',
   },
   {
     id: '18',
-    name: 'Faro LED Principal',
-    price: 500,
-    image: '/placeholder.svg?height=160&width=240',
-    category: 'Iluminación',
+    name: 'Rieles de Techo',
+    price: 350,
+    images: [
+      '/accesorios/rieles-1.jpg',
+      '/accesorios/rieles-2.jpg'
+    ],
+    category: 'Exterior',
+    description: 'Rieles de techo de alta calidad para proteger el interior de tu vehículo.',
   },
   {
     id: '19',
-    name: 'Bombillas HID',
-    price: 450,
-    image: '/placeholder.svg?height=160&width=240',
-    category: 'Iluminación',
+    name: 'Barras Portaequipaje',
+    price: 300,
+    images: [
+      '/accesorios/barras-1.jpg',
+      '/accesorios/barras-2.jpg'
+    ],
+    category: 'Exterior',
+    description: 'Barras portaequipaje de alta calidad para proteger el interior de tu vehículo.',
   },
   {
     id: '20',
-    name: 'Bocinas Traseras',
-    price: 300,
-    image: '/placeholder.svg?height=160&width=240',
+    name: 'Espejos Retrovisores LED',
+    price: 400,
+    images: [
+      '/accesorios/espejos-1.jpg',
+      '/accesorios/espejos-2.jpg'
+    ],
     category: 'Electrónica',
+    description: 'Espejos retrovisores LED de alta calidad para proteger el interior de tu vehículo.',
   },
   {
     id: '21',
-    name: 'Amplificador de Audio',
-    price: 1200,
-    image: '/placeholder.svg?height=160&width=240',
-    category: 'Electrónica',
+    name: 'Luces LED de Cortesía',
+    price: 150,
+    images: [
+      '/accesorios/luces-1.jpg',
+      '/accesorios/luces-2.jpg'
+    ],
+    category: 'Iluminación',
+    description: 'Luces LED de cortesía de alta calidad para proteger el interior de tu vehículo.',
   },
   {
     id: '22',
-    name: 'Subwoofer',
-    price: 700,
-    image: '/placeholder.svg?height=160&width=240',
-    category: 'Electrónica',
+    name: 'Luces Antiniebla',
+    price: 220,
+    images: [
+      '/accesorios/luces-antiniebla-1.jpg',
+      '/accesorios/luces-antiniebla-2.jpg'
+    ],
+    category: 'Iluminación',
+    description: 'Luces antiniebla de alta calidad para proteger el interior de tu vehículo.',
   },
   {
     id: '23',
-    name: 'Radio AM/FM Bluetooth',
-    price: 400,
-    image: '/placeholder.svg?height=160&width=240',
-    category: 'Electrónica',
+    name: 'Faro LED Principal',
+    price: 500,
+    images: [
+      '/accesorios/faro-1.jpg',
+      '/accesorios/faro-2.jpg'
+    ],
+    category: 'Iluminación',
+    description: 'Faro LED principal de alta calidad para proteger el interior de tu vehículo.',
   },
   {
     id: '24',
-    name: 'Adaptador Bluetooth',
-    price: 70,
-    image: '/placeholder.svg?height=160&width=240',
-    category: 'Electrónica',
+    name: 'Bombillas HID',
+    price: 450,
+    images: [
+      '/accesorios/bombillas-1.jpg',
+      '/accesorios/bombillas-2.jpg'
+    ],
+    category: 'Iluminación',
+    description: 'Bombillas HID de alta calidad para proteger el interior de tu vehículo.',
   },
   {
     id: '25',
-    name: 'Soporte de Celular',
-    price: 50,
-    image: '/placeholder.svg?height=160&width=240',
+    name: 'Bocinas Traseras',
+    price: 300,
+    images: [
+      '/accesorios/bocinas-1.jpg',
+      '/accesorios/bocinas-2.jpg'
+    ],
     category: 'Electrónica',
+    description: 'Bocinas traseras de alta calidad para proteger el interior de tu vehículo.',
   },
   {
     id: '26',
-    name: 'Cargador USB Múltiple',
-    price: 100,
-    image: '/placeholder.svg?height=160&width=240',
+    name: 'Amplificador de Audio',
+    price: 1200,
+    images: [
+      '/accesorios/amplificador-1.jpg',
+      '/accesorios/amplificador-2.jpg'
+    ],
     category: 'Electrónica',
+    description: 'Amplificador de audio de alta calidad para proteger el interior de tu vehículo.',
   },
   {
     id: '27',
-    name: 'Cámara de Reversa',
-    price: 800,
-    image: '/placeholder.svg?height=160&width=240',
+    name: 'Subwoofer',
+    price: 700,
+    images: [
+      '/accesorios/subwoofer-1.jpg',
+      '/accesorios/subwoofer-2.jpg'
+    ],
     category: 'Electrónica',
+    description: 'Subwoofer de alta calidad para proteger el interior de tu vehículo.',
   },
   {
     id: '28',
-    name: 'Sensores de Estacionamiento',
-    price: 600,
-    image: '/placeholder.svg?height=160&width=240',
+    name: 'Radio AM/FM Bluetooth',
+    price: 400,
+    images: [
+      '/accesorios/radio-1.jpg',
+      '/accesorios/radio-2.jpg'
+    ],
     category: 'Electrónica',
+    description: 'Radio AM/FM Bluetooth de alta calidad para proteger el interior de tu vehículo.',
   },
   {
     id: '29',
-    name: 'Sistema de Alarma',
-    price: 900,
-    image: '/placeholder.svg?height=160&width=240',
-    category: 'Seguridad',
+    name: 'Adaptador Bluetooth',
+    price: 70,
+    images: [
+      '/accesorios/adaptador-1.jpg',
+      '/accesorios/adaptador-2.jpg'
+    ],
+    category: 'Electrónica',
+    description: 'Adaptador Bluetooth de alta calidad para proteger el interior de tu vehículo.',
   },
   {
     id: '30',
-    name: 'Localizador GPS',
-    price: 1000,
-    image: '/placeholder.svg?height=160&width=240',
-    category: 'Seguridad',
+    name: 'Soporte de Celular',
+    price: 50,
+    images: [
+      '/accesorios/soporte-1.jpg',
+      '/accesorios/soporte-2.jpg'
+    ],
+    category: 'Electrónica',
+    description: 'Soporte de celular de alta calidad para proteger el interior de tu vehículo.',
   },
   {
     id: '31',
-    name: 'Extintor de Incendios',
-    price: 300,
-    image: '/placeholder.svg?height=160&width=240',
-    category: 'Seguridad',
+    name: 'Cargador USB Múltiple',
+    price: 100,
+    images: [
+      '/accesorios/cargador-1.jpg',
+      '/accesorios/cargador-2.jpg'
+    ],
+    category: 'Electrónica',
+    description: 'Cargador USB múltiple de alta calidad para proteger el interior de tu vehículo.',
   },
   {
     id: '32',
-    name: 'Triángulo de Emergencia',
-    price: 250,
-    image: '/placeholder.svg?height=160&width=240',
-    category: 'Seguridad',
+    name: 'Cámara de Reversa',
+    price: 800,
+    images: [
+      '/accesorios/camara-1.jpg',
+      '/accesorios/camara-2.jpg'
+    ],
+    category: 'Electrónica',
+    description: 'Cámara de reversa de alta calidad para proteger el interior de tu vehículo.',
   },
   {
     id: '33',
-    name: 'Botiquín de Primeros Auxilios',
-    price: 150,
-    image: '/placeholder.svg?height=160&width=240',
-    category: 'Seguridad',
+    name: 'Sensores de Estacionamiento',
+    price: 600,
+    images: [
+      '/accesorios/sensores-1.jpg',
+      '/accesorios/sensores-2.jpg'
+    ],
+    category: 'Electrónica',
+    description: 'Sensores de estacionamiento de alta calidad para proteger el interior de tu vehículo.',
   },
   {
     id: '34',
-    name: 'Gato Hidráulico',
-    price: 200,
-    image: '/placeholder.svg?height=160&width=240',
-    category: 'Mecánica',
+    name: 'Sistema de Alarma',
+    price: 900,
+    images: [
+      '/accesorios/alarma-1.jpg',
+      '/accesorios/alarma-2.jpg'
+    ],
+    category: 'Seguridad',
+    description: 'Sistema de alarma de alta calidad para proteger el interior de tu vehículo.',
   },
   {
     id: '35',
-    name: 'Llave de Cruz',
-    price: 80,
-    image: '/placeholder.svg?height=160&width=240',
-    category: 'Mecánica',
+    name: 'Localizador GPS',
+    price: 1000,
+    images: [
+      '/accesorios/localizador-1.jpg',
+      '/accesorios/localizador-2.jpg'
+    ],
+    category: 'Seguridad',
+    description: 'Localizador GPS de alta calidad para proteger el interior de tu vehículo.',
   },
   {
     id: '36',
-    name: 'Extensión de Cables Batería',
-    price: 60,
-    image: '/placeholder.svg?height=160&width=240',
-    category: 'Mecánica',
+    name: 'Extintor de Incendios',
+    price: 300,
+    images: [
+      '/accesorios/extintor-1.jpg',
+      '/accesorios/extintor-2.jpg'
+    ],
+    category: 'Seguridad',
+    description: 'Extintor de incendios de alta calidad para proteger el interior de tu vehículo.',
   },
   {
     id: '37',
-    name: 'Batería Externa de Emergencia',
-    price: 50,
-    image: '/placeholder.svg?height=160&width=240',
-    category: 'Electrónica',
+    name: 'Triángulo de Emergencia',
+    price: 250,
+    images: [
+      '/accesorios/triangulo-1.jpg',
+      '/accesorios/triangulo-2.jpg'
+    ],
+    category: 'Seguridad',
+    description: 'Triángulo de emergencia de alta calidad para proteger el interior de tu vehículo.',
   },
   {
     id: '38',
-    name: 'Compresor de Aire Portátil',
-    price: 1100,
-    image: '/placeholder.svg?height=160&width=240',
-    category: 'Neumáticos',
+    name: 'Botiquín de Primeros Auxilios',
+    price: 150,
+    images: [
+      '/accesorios/botiquin-1.jpg',
+      '/accesorios/botiquin-2.jpg'
+    ],
+    category: 'Seguridad',
+    description: 'Botiquín de primeros auxilios de alta calidad para proteger el interior de tu vehículo.',
   },
   {
     id: '39',
-    name: 'Kit de Reparación de Llantas',
-    price: 800,
-    image: '/placeholder.svg?height=160&width=240',
-    category: 'Neumáticos',
+    name: 'Gato Hidráulico',
+    price: 200,
+    images: [
+      '/accesorios/gato-1.jpg',
+      '/accesorios/gato-2.jpg'
+    ],
+    category: 'Mecánica',
+    description: 'Gato hidráulico de alta calidad para proteger el interior de tu vehículo.',
   },
   {
     id: '40',
-    name: 'Juego de Tapacubos',
-    price: 200,
-    image: '/placeholder.svg?height=160&width=240',
-    category: 'Rines',
+    name: 'Llave de Cruz',
+    price: 80,
+    images: [
+      '/accesorios/llave-1.jpg',
+      '/accesorios/llave-2.jpg'
+    ],
+    category: 'Mecánica',
+    description: 'Llave de cruz de alta calidad para proteger el interior de tu vehículo.',
   },
   {
     id: '41',
-    name: 'Rines de Aleación 17"',
-    price: 1500,
-    image: '/placeholder.svg?height=160&width=240',
-    category: 'Rines',
+    name: 'Extensión de Cables Batería',
+    price: 60,
+    images: [
+      '/accesorios/extensión-1.jpg',
+      '/accesorios/extensión-2.jpg'
+    ],
+    category: 'Mecánica',
+    description: 'Extensión de cables batería de alta calidad para proteger el interior de tu vehículo.',
   },
   {
     id: '42',
-    name: 'Rines Deportivos 18"',
-    price: 1800,
-    image: '/placeholder.svg?height=160&width=240',
-    category: 'Rines',
+    name: 'Batería Externa de Emergencia',
+    price: 50,
+    images: [
+      '/accesorios/batería-1.jpg',
+      '/accesorios/batería-2.jpg'
+    ],
+    category: 'Electrónica',
+    description: 'Batería externa de emergencia de alta calidad para proteger el interior de tu vehículo.',
   },
   {
     id: '43',
-    name: 'Kit de Limpieza Exterior',
-    price: 300,
-    image: '/placeholder.svg?height=160&width=240',
-    category: 'Limpieza',
+    name: 'Compresor de Aire Portátil',
+    price: 1100,
+    images: [
+      '/accesorios/compresor-1.jpg',
+      '/accesorios/compresor-2.jpg'
+    ],
+    category: 'Neumáticos',
+    description: 'Compresor de aire portátil de alta calidad para proteger el interior de tu vehículo.',
   },
   {
     id: '44',
-    name: 'Kit de Limpieza Interior',
-    price: 200,
-    image: '/placeholder.svg?height=160&width=240',
-    category: 'Limpieza',
+    name: 'Kit de Reparación de Llantas',
+    price: 800,
+    images: [
+      '/accesorios/kit-1.jpg',
+      '/accesorios/kit-2.jpg'
+    ],
+    category: 'Neumáticos',
+    description: 'Kit de reparación de llantas de alta calidad para proteger el interior de tu vehículo.',
   },
   {
     id: '45',
-    name: 'Cera Automotriz Líquida',
-    price: 250,
-    image: '/placeholder.svg?height=160&width=240',
-    category: 'Limpieza',
+    name: 'Juego de Tapacubos',
+    price: 200,
+    images: [
+      '/accesorios/tapacubos-1.jpg',
+      '/accesorios/tapacubos-2.jpg'
+    ],
+    category: 'Rines',
+    description: 'Juego de tapacubos de alta calidad para proteger el interior de tu vehículo.',
   },
   {
     id: '46',
-    name: 'Paños de Microfibra (Pack 5)',
-    price: 100,
-    image: '/placeholder.svg?height=160&width=240',
-    category: 'Limpieza',
+    name: 'Rines de Aleación 17"',
+    price: 1500,
+    images: [
+      '/accesorios/rines-1.jpg',
+      '/accesorios/rines-2.jpg'
+    ],
+    category: 'Rines',
+    description: 'Rines de aleación 17" de alta calidad para proteger el interior de tu vehículo.',
   },
   {
     id: '47',
-    name: 'Aspiradora de Mano para Auto',
-    price: 350,
-    image: '/placeholder.svg?height=160&width=240',
-    category: 'Limpieza',
+    name: 'Rines Deportivos 18"',
+    price: 1800,
+    images: [
+      '/accesorios/rines-deportivos-1.jpg',
+      '/accesorios/rines-deportivos-2.jpg'
+    ],
+    category: 'Rines',
+    description: 'Rines deportivos 18" de alta calidad para proteger el interior de tu vehículo.',
   },
   {
     id: '48',
-    name: 'Presión Washer Portátil',
-    price: 400,
-    image: '/placeholder.svg?height=160&width=240',
+    name: 'Kit de Limpieza Exterior',
+    price: 300,
+    images: [
+      '/accesorios/kit-limpieza-1.jpg',
+      '/accesorios/kit-limpieza-2.jpg'
+    ],
     category: 'Limpieza',
+    description: 'Kit de limpieza exterior de alta calidad para proteger el interior de tu vehículo.',
   },
   {
     id: '49',
-    name: 'Guantes de Trabajo',
-    price: 80,
-    image: '/placeholder.svg?height=160&width=240',
+    name: 'Kit de Limpieza Interior',
+    price: 200,
+    images: [
+      '/accesorios/kit-limpieza-interior-1.jpg',
+      '/accesorios/kit-limpieza-interior-2.jpg'
+    ],
     category: 'Limpieza',
+    description: 'Kit de limpieza interior de alta calidad para proteger el interior de tu vehículo.',
   },
   {
     id: '50',
-    name: 'Aromatizante de Auto',
-    price: 50,
-    image: '/placeholder.svg?height=160&width=240',
-    category: 'Interior',
+    name: 'Cera Automotriz Líquida',
+    price: 250,
+    images: [
+      '/accesorios/cera-1.jpg',
+      '/accesorios/cera-2.jpg'
+    ],
+    category: 'Limpieza',
+    description: 'Cera automotriz líquida de alta calidad para proteger el interior de tu vehículo.',
   },
 ];
 

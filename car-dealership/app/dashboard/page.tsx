@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
 import UserManagement from './userManagent/page';
 import EmployeeManagement from './EmployeeManagement/page';
-import CarManagement from './cardManagement/page';
+import CarManagement from './carManagement/page';
 import PartManagement from './partManagement/page';
 
 export default function Dashboard() {
@@ -15,7 +15,7 @@ export default function Dashboard() {
         <TabsList className='mb-6'>
           <TabsTrigger value='users'>Gestionar Usuarios</TabsTrigger>
           <TabsTrigger value='employees'>Gestionar Trabajadores</TabsTrigger>
-          <TabsTrigger value='cars'>Gestionar Carros</TabsTrigger>
+          <TabsTrigger value='cars'>Gestionar Vehículos</TabsTrigger>
           <TabsTrigger value='parts'>Gestionar Piezas</TabsTrigger>
         </TabsList>
 

@@ -10,7 +10,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
+import { Sheet, SheetContent, SheetTrigger, SheetTitle } from '@/components/ui/sheet';
 import {
   Car,
   Menu,
@@ -39,18 +39,29 @@ export default function Navbar() {
           <Link href='/' className='text-sm font-medium hover:text-primary'>
             Inicio
           </Link>
-          <Link
-            href='/comprar'
-            className='text-sm font-medium hover:text-primary'
-          >
-            Comprar
-          </Link>
-          <Link
-            href='/accesorios'
-            className='text-sm font-medium hover:text-primary'
-          >
-            Accesorios
-          </Link>
+          
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant='link' className='text-sm font-medium p-0'>
+                Comprar
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align='end'>
+              <DropdownMenuItem>
+                <Link href='/comprar' className='flex w-full'>
+                  <Car className='mr-2 h-4 w-4' />
+                  Vehículos
+                </Link>
+              </DropdownMenuItem>
+              <DropdownMenuItem>
+                <Link href='/accesorios' className='flex w-full'>
+                  <Tool className='mr-2 h-4 w-4' />
+                  Accesorios
+                </Link>
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button variant='link' className='text-sm font-medium p-0'>
@@ -78,6 +89,7 @@ export default function Navbar() {
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
+          
           <Link
             href='/devoluciones'
             className='text-sm font-medium hover:text-primary'
@@ -100,103 +112,148 @@ export default function Navbar() {
           </Link>
         </div>
 
+        {/* Mobile Menu Button */}
+        <Button
+          variant='ghost'
+          size='icon'
+          className='md:hidden'
+          onClick={() => setIsMenuOpen(true)}
+        >
+          <Menu className='h-6 w-6' />
+        </Button>
+
         {/* Mobile Menu */}
         <Sheet open={isMenuOpen} onOpenChange={setIsMenuOpen}>
-          <div className='flex items-center gap-2 md:hidden'>
-            <Cart />
-            <SheetTrigger asChild>
-              <Button variant='outline' size='icon'>
-                <Menu className='h-6 w-6' />
-                <span className='sr-only'>Toggle menu</span>
+          <SheetContent side='left' className='w-[300px]'>
+            <SheetTitle className="sr-only">Menú de navegación</SheetTitle>
+            <div className='flex items-center justify-between py-4'>
+              <Link href='/' className='flex items-center gap-2'>
+                <Image src={logo} alt='Logo' className='h-8 w-auto' />
+              </Link>
+              <Button
+                variant='ghost'
+                size='icon'
+                onClick={() => setIsMenuOpen(false)}
+              >
+                <X className='h-6 w-6' />
               </Button>
-            </SheetTrigger>
-          </div>
-          <SheetContent side='right'>
-            <div className='flex flex-col h-full'>
-              <div className='flex items-center justify-between border-b pb-4'>
-                <Link
-                  href='/'
-                  className='flex items-center gap-2 font-bold text-xl'
-                >
-                  <Car className='h-6 w-6' />
-                  <span>AutoRepuestos</span>
-                </Link>
-                <Button
-                  variant='ghost'
-                  size='icon'
-                  onClick={() => setIsMenuOpen(false)}
-                >
-                  <X className='h-6 w-6' />
-                </Button>
-              </div>
-              <nav className='flex flex-col gap-4 py-6'>
-                <Link
-                  href='/'
-                  className='text-lg font-medium'
-                  onClick={() => setIsMenuOpen(false)}
-                >
-                  Inicio
-                </Link>
-                <Link
-                  href='/comprar'
-                  className='text-lg font-medium'
-                  onClick={() => setIsMenuOpen(false)}
-                >
-                  Comprar
-                </Link>
-                <Link
-                  href='/accesorios'
-                  className='text-lg font-medium'
-                  onClick={() => setIsMenuOpen(false)}
-                >
-                  Accesorios
-                </Link>
-                <div className='flex flex-col gap-2 pl-4 border-l'>
-                  <h3 className='text-lg font-medium'>Servicios</h3>
-                  <Link
-                    href='/servicios/reparacion'
-                    className='text-base'
+            </div>
+            <nav className='space-y-4'>
+              <Link
+                href='/'
+                className='text-sm font-medium hover:text-primary block'
+                onClick={() => setIsMenuOpen(false)}
+              >
+                Inicio
+              </Link>
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button
+                    variant='ghost'
+                    className='text-sm font-medium w-full justify-start'
+                  >
+                    Comprar
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent className='w-full'>
+                  <DropdownMenuItem>
+                    <Link
+                      href='/comprar'
+                      className='flex w-full'
+                      onClick={() => setIsMenuOpen(false)}
+                    >
+                      <Car className='mr-2 h-4 w-4' />
+                      Vehículos
+                    </Link>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem>
+                    <Link
+                      href='/accesorios'
+                      className='flex w-full'
+                      onClick={() => setIsMenuOpen(false)}
+                    >
+                      <Tool className='mr-2 h-4 w-4' />
+                      Accesorios
+                    </Link>
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
+              
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button
+                    variant='ghost'
+                    className='text-sm font-medium w-full justify-start'
+                  >
+                    Servicios
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent className='w-full'>
+                  <DropdownMenuItem>
+                    <Link
+                      href='/servicios/reparacion'
+                      className='flex w-full'
+                      onClick={() => setIsMenuOpen(false)}
+                    >
+                      <Wrench className='mr-2 h-4 w-4' />
+                      Reparación
+                    </Link>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem>
+                    <Link
+                      href='/servicios/asesoria'
+                      className='flex w-full'
+                      onClick={() => setIsMenuOpen(false)}
+                    >
+                      <Tool className='mr-2 h-4 w-4' />
+                      Asesoría Técnica
+                    </Link>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem>
+                    <Link
+                      href='/servicios/piezas'
+                      className='flex w-full'
+                      onClick={() => setIsMenuOpen(false)}
+                    >
+                      <ShoppingCart className='mr-2 h-4 w-4' />
+                      Venta de Piezas
+                    </Link>
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
+              
+              <Link
+                href='/devoluciones'
+                className='text-sm font-medium hover:text-primary block'
+                onClick={() => setIsMenuOpen(false)}
+              >
+                <span className='flex items-center gap-1'>
+                  <RotateCcw className='h-4 w-4' />
+                  Devoluciones
+                </span>
+              </Link>
+
+              {/* Auth Buttons - Mobile */}
+              <div className='mt-6 space-y-2'>
+                <Link href='/login'>
+                  <Button
+                    variant='outline'
+                    className='w-full'
                     onClick={() => setIsMenuOpen(false)}
                   >
-                    Reparación
-                  </Link>
-                  <Link
-                    href='/servicios/asesoria'
-                    className='text-base'
-                    onClick={() => setIsMenuOpen(false)}
-                  >
-                    Asesoría Técnica
-                  </Link>
-                  <Link
-                    href='/servicios/piezas'
-                    className='text-base'
-                    onClick={() => setIsMenuOpen(false)}
-                  >
-                    Venta de Piezas
-                  </Link>
-                </div>
-                <Link
-                  href='/devoluciones'
-                  className='text-lg font-medium'
-                  onClick={() => setIsMenuOpen(false)}
-                >
-                  <span className='flex items-center gap-2'>
-                    <RotateCcw className='h-5 w-5' />
-                    Devoluciones
-                  </span>
-                </Link>
-              </nav>
-              <div className='mt-auto flex flex-col gap-4'>
-                <Link href='/login' onClick={() => setIsMenuOpen(false)}>
-                  <Button variant='outline' className='w-full'>
                     Iniciar Sesión
                   </Button>
                 </Link>
-                <Link href='/register' onClick={() => setIsMenuOpen(false)}>
-                  <Button className='w-full'>Registrarse</Button>
+                <Link href='/register'>
+                  <Button
+                    className='w-full'
+                    onClick={() => setIsMenuOpen(false)}
+                  >
+                    Registrarse
+                  </Button>
                 </Link>
               </div>
-            </div>
+            </nav>
           </SheetContent>
         </Sheet>
       </div>
