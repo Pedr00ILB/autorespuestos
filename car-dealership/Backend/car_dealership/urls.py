@@ -2,10 +2,14 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
+from rest_framework_simplejwt.views import (
+    TokenRefreshView,
+)
+from carros.authentication import CustomTokenObtainPairView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    
+
     # API endpoints
     path('api/carros/', include('carros.urls')),
     path('api/piezas/', include('piezas.urls')),
@@ -13,4 +17,8 @@ urlpatterns = [
     path('api/devoluciones/', include('devoluciones.urls')),
     path('api/asesorias/', include('asesorias.urls')),
     path('api/accesorios/', include('accesorios.urls')),
+
+    # JWT Authentication
+    path('api/auth/token/', CustomTokenObtainPairView.as_view(), name='token_obtain_pair'),
+    path('api/auth/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

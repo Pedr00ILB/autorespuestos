@@ -27,6 +27,15 @@ class UsuarioSerializer(serializers.ModelSerializer):
             'is_staff',
             'is_superuser'
         ]
+        extra_kwargs = {
+            'telefono': {'required': False, 'allow_null': True},
+            'fecha_nacimiento': {'required': False, 'allow_null': True}
+        }
+
+    def validate(self, data):
+        if not data.get('telefono'):
+            data['telefono'] = ''
+        return data
 
 class PerfilSerializer(serializers.ModelSerializer):
     class Meta:
@@ -40,6 +49,15 @@ class PerfilSerializer(serializers.ModelSerializer):
             'fecha_actualizacion'
         ]
         read_only_fields = ['id', 'fecha_creacion', 'fecha_actualizacion']
+        extra_kwargs = {
+            'direccion': {'required': False, 'allow_null': True},
+            'foto_perfil': {'required': False, 'allow_null': True}
+        }
+
+    def validate(self, data):
+        if not data.get('direccion'):
+            data['direccion'] = 'Sin dirección registrada'
+        return data
 
 class ClienteSerializer(serializers.ModelSerializer):
     class Meta:
@@ -52,6 +70,14 @@ class ClienteSerializer(serializers.ModelSerializer):
             'puntos_fidelidad'
         ]
         read_only_fields = ['id']
+        extra_kwargs = {
+            'preferencias': {'required': False, 'allow_null': True}
+        }
+
+    def validate(self, data):
+        if not data.get('preferencias'):
+            data['preferencias'] = 'Sin preferencias registradas'
+        return data
 
 class EmpleadoSerializer(serializers.ModelSerializer):
     class Meta:
@@ -64,3 +90,13 @@ class EmpleadoSerializer(serializers.ModelSerializer):
             'especialidad'
         ]
         read_only_fields = ['id']
+        extra_kwargs = {
+            'cargo': {'required': False, 'default': 'Empleado General'},
+            'fecha_contratacion': {'required': False, 'allow_null': True},
+            'especialidad': {'required': False, 'allow_null': True}
+        }
+
+    def validate(self, data):
+        if not data.get('especialidad'):
+            data['especialidad'] = 'Sin especialidad registrada'
+        return data

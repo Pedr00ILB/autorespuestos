@@ -3,7 +3,7 @@ from django.contrib.auth.models import AbstractUser
 
 class Usuario(AbstractUser):
     email = models.EmailField(unique=True)
-    telefono = models.CharField(max_length=20, blank=True, null=True)
+    telefono = models.CharField(max_length=20, blank=True, null=True, default='')
     fecha_nacimiento = models.DateField(null=True, blank=True)
     es_cliente = models.BooleanField(default=True)
     es_empleado = models.BooleanField(default=False)
@@ -11,6 +11,11 @@ class Usuario(AbstractUser):
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['username']
+
+    def save(self, *args, **kwargs):
+        if not self.telefono:
+            self.telefono = ''
+        super().save(*args, **kwargs)
 
     class Meta:
         verbose_name = 'Usuario'
@@ -25,8 +30,13 @@ class Perfil(models.Model):
         on_delete=models.CASCADE,
         related_name='perfil'
     )
-    direccion = models.TextField(blank=True, null=True)
-    foto_perfil = models.ImageField(upload_to='perfiles/', blank=True, null=True)
+    direccion = models.TextField(blank=True, null=True, default='Sin dirección registrada')
+    foto_perfil = models.ImageField(
+        upload_to='perfiles/', 
+        blank=True, 
+        null=True,
+        default='perfiles/default_profile.png'
+    )
     fecha_creacion = models.DateTimeField(auto_now_add=True)
     fecha_actualizacion = models.DateTimeField(auto_now=True)
 
@@ -39,7 +49,7 @@ class Cliente(models.Model):
         on_delete=models.CASCADE,
         related_name='cliente'
     )
-    preferencias = models.TextField(blank=True, null=True)
+    preferencias = models.TextField(blank=True, null=True, default='Sin preferencias registradas')
     historial_compras = models.JSONField(default=list)
     puntos_fidelidad = models.IntegerField(default=0)
 
@@ -52,9 +62,14 @@ class Empleado(models.Model):
         on_delete=models.CASCADE,
         related_name='empleado'
     )
-    cargo = models.CharField(max_length=100)
-    fecha_contratacion = models.DateField()
-    especialidad = models.CharField(max_length=100, blank=True, null=True)
+    cargo = models.CharField(max_length=100, default='Empleado General')
+    fecha_contratacion = models.DateField(null=True, blank=True)
+    especialidad = models.CharField(max_length=200, blank=True, null=True, default='Sin especialidad registrada')
+
+    def save(self, *args, **kwargs):
+        if not self.fecha_contratacion:
+            self.fecha_contratacion = None
+        super().save(*args, **kwargs)
 
     def __str__(self):
         return f"{self.usuario.username} - {self.cargo}"
