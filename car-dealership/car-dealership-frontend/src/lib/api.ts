@@ -1,4 +1,10 @@
 import axios, { AxiosError, AxiosRequestConfig, AxiosResponse, InternalAxiosRequestConfig } from 'axios';
+
+declare module 'axios' {
+  export interface AxiosRequestConfig {
+    _skipAuth?: boolean;
+  }
+}
 import { useRouter } from 'next/navigation';
 
 // Interfaz para el payload del token JWT
@@ -59,19 +65,33 @@ const isTokenExpired = (token: string): boolean => {
 const refreshAccessToken = async (): Promise<string | null> => {
   try {
     const refreshToken = localStorage.getItem('refresh_token');
-    if (!refreshToken) return null;
-
-    const response = await axios.post<{ access: string }>(
-      `${process.env.NEXT_PUBLIC_API_URL}/api/auth/token/refresh/`,
-      { refresh: refreshToken },
-      { withCredentials: true }
-    );
-
-    if (response.data?.access) {
-      localStorage.setItem('token', response.data.access);
-      return response.data.access;
+    if (!refreshToken) {
+      console.error('No se encontró token de refresco');
+      return null;
     }
-    return null;
+
+    try {
+      const response = await axios.post<{ access: string }>(
+        `${process.env.NEXT_PUBLIC_API_URL}/api/auth/token/refresh/`,
+        { refresh: refreshToken },
+        { 
+          withCredentials: true,
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        }
+      );
+
+      if (response.data?.access) {
+        localStorage.setItem('token', response.data.access);
+        console.log('Token renovado exitosamente');
+        return response.data.access;
+      }
+      return null;
+    } catch (error) {
+      console.error('Error al renovar el token:', error);
+      throw error; // Propagar el error para manejarlo en el interceptor
+    }
   } catch (error) {
     console.error('Error al renovar el token:', error);
     // Limpiar tokens y redirigir al login
@@ -85,8 +105,8 @@ const refreshAccessToken = async (): Promise<string | null> => {
 // Interceptor para añadir el token de acceso a las peticiones
 api.interceptors.request.use(
   async (config: InternalAxiosRequestConfig) => {
-    // No interceptar peticiones de autenticación
-    if (config.url?.includes('/auth/')) {
+    // No interceptar peticiones de autenticación o cuando se solicita omitir autenticación
+    if (config.url?.includes('/auth/') || config._skipAuth) {
       return config;
     }
 
@@ -142,8 +162,10 @@ api.interceptors.response.use(
     // Si el error es 401 y no es una petición de autenticación y no se ha reintentado
     if (
       error.response?.status === 401 &&
-      !originalRequest.url?.includes('/auth/') &&
-      !originalRequest._retry
+      originalRequest.url && 
+      !originalRequest.url.includes('/auth/') &&
+      !originalRequest._retry &&
+      localStorage.getItem('refresh_token') // Solo intentar renovar si hay refresh token
     ) {
       originalRequest._retry = true;
 
@@ -161,10 +183,13 @@ api.interceptors.response.use(
         console.error('Error al renovar el token:', error);
       }
 
-      // Si no se pudo renovar el token, redirigir al login
+      // Si no se pudo renovar el token, limpiar y redirigir
       localStorage.removeItem('token');
       localStorage.removeItem('refresh_token');
-      window.location.href = '/login';
+      // Usar window.location en lugar de router para asegurar que se recargue la página
+      if (typeof window !== 'undefined') {
+        window.location.href = '/login?session_expired=1';
+      }
     }
 
     return Promise.reject(error);
