@@ -5,6 +5,7 @@ from rest_framework import status
 from .models import Carro
 from .serializers import CarroSerializer
 from .permissions import IsOwnerOrAdmin
+from usuarios.permisos import EsAdmin
 
 class CarroList(generics.ListAPIView):
     queryset = Carro.objects.all()
@@ -20,7 +21,7 @@ class CarroDetail(generics.RetrieveAPIView):
 class CarroCreate(generics.CreateAPIView):
     queryset = Carro.objects.all()
     serializer_class = CarroSerializer
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated, EsAdmin]
 
     def perform_create(self, serializer):
         # Agregamos el usuario que crea el carro

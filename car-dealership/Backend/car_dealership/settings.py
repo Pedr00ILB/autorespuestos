@@ -37,13 +37,22 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
-    'corsheaders.middleware.CorsMiddleware',  # Agregado para CORS
+    'corsheaders.middleware.CorsMiddleware',  # Debe estar antes de CommonMiddleware
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
+# Configuración de seguridad
+SECURE_BROWSER_XSS_FILTER = True
+SECURE_CONTENT_TYPE_NOSNIFF = True
+CSRF_COOKIE_HTTPONLY = True
+CSRF_COOKIE_SAMESITE = 'Lax'
+SESSION_COOKIE_SAMESITE = 'Lax'
+CSRF_COOKIE_SECURE = False  # Cambiar a True en producción con HTTPS
+SESSION_COOKIE_SECURE = False  # Cambiar a True en producción con HTTPS
 
 ROOT_URLCONF = 'car_dealership.urls'
 
@@ -99,6 +108,57 @@ USE_TZ = True
 STATIC_URL = 'static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
+# Configuración de autenticación
+AUTH_USER_MODEL = 'usuarios.Usuario'
+
+# Configuración de JWT
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ),
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.IsAuthenticated',
+    ),
+}
+
+# Configuración de Simple JWT
+from datetime import timedelta
+
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=60),
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
+    'ROTATE_REFRESH_TOKENS': True,
+    'BLACKLIST_AFTER_ROTATION': True,
+    'UPDATE_LAST_LOGIN': True,
+    'ALGORITHM': 'HS256',
+    'SIGNING_KEY': SECRET_KEY,
+    'AUTH_HEADER_TYPES': ('Bearer',),
+    'AUTH_COOKIE': 'access_token',  # Nombre de la cookie para el token de acceso
+    'AUTH_COOKIE_SECURE': not DEBUG,  # Solo enviar sobre HTTPS en producción
+    'AUTH_COOKIE_HTTP_ONLY': True,  # No accesible desde JavaScript
+    'AUTH_COOKIE_SAMESITE': 'Lax',  # Protección CSRF
+    'AUTH_COOKIE_PATH': '/',  # Ruta de la cookie
+    'AUTH_COOKIE_DOMAIN': None,  # Dominio de la cookie (None para el dominio actual)
+}
+
+# Configuración de sesiones
+SESSION_COOKIE_HTTPONLY = True
+SESSION_COOKIE_SECURE = not DEBUG  # Solo enviar sobre HTTPS en producción
+SESSION_COOKIE_SAMESITE = 'Lax'  # Protección CSRF
+CSRF_COOKIE_HTTPONLY = False  # Necesario para que Axios pueda leer el token CSRF
+CSRF_COOKIE_SECURE = not DEBUG  # Solo enviar sobre HTTPS en producción
+CSRF_COOKIE_SAMESITE = 'Lax'  # Protección CSRF
+CSRF_USE_SESSIONS = False  # No usar sesiones para CSRF
+CSRF_HEADER_NAME = 'HTTP_X_CSRFTOKEN'  # Nombre del encabezado CSRF
+
+# Configuración de CORS (ya importada desde cors.py)
+# Asegúrate de que CORS_ALLOW_CREDENTIALS = True esté configurado
+
+# Configuración de autenticación personalizada
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',
+]
+
 # Media files
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
@@ -120,4 +180,15 @@ REST_FRAMEWORK = {
     ],
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
     'PAGE_SIZE': 10,
+}
+
+from datetime import timedelta
+
+SIMPLE_JWT = {
+    "ACCESS_TOKEN_LIFETIME": timedelta(minutes=60),
+    "REFRESH_TOKEN_LIFETIME": timedelta(days=1),
+    "ROTATE_REFRESH_TOKENS": False,
+    "BLACKLIST_AFTER_ROTATION": True,
+    "AUTH_HEADER_TYPES": ("Bearer",),
+    "AUTH_TOKEN_CLASSES": ("rest_framework_simplejwt.tokens.AccessToken",),
 }

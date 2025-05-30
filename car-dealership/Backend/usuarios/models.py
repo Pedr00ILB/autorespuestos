@@ -21,8 +21,21 @@ class Usuario(AbstractUser):
         verbose_name = 'Usuario'
         verbose_name_plural = 'Usuarios'
 
+    def get_full_name(self):
+        """
+        Devuelve el nombre completo del usuario.
+        """
+        full_name = f"{self.first_name} {self.last_name}".strip()
+        return full_name if full_name else self.email
+        
+    def get_short_name(self):
+        """
+        Devuelve el nombre corto del usuario (solo el primer nombre).
+        """
+        return self.first_name or self.email.split('@')[0]
+        
     def __str__(self):
-        return self.email
+        return self.get_full_name() or self.email
 
 class Perfil(models.Model):
     usuario = models.OneToOneField(

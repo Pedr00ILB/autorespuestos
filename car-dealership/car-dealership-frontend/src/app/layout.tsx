@@ -1,8 +1,11 @@
+'use client';
+
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import Link from 'next/link';
 import Image from 'next/image';
+import { AuthProvider } from '@/providers/AuthProvider';
 
 const inter = Inter({
   subsets: ['latin'],
@@ -24,6 +27,7 @@ export default function RootLayout({
       <body
         className={`${inter.variable} antialiased min-h-screen bg-gray-100`}
       >
+        <AuthProvider>
         <nav className="bg-white shadow">
           <div className="container mx-auto px-4">
             <div className="flex justify-between h-16">
@@ -79,6 +83,7 @@ export default function RootLayout({
             </div>
           </div>
         </footer>
+        </AuthProvider>
       </body>
     </html>
   );

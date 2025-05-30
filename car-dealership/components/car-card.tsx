@@ -64,7 +64,9 @@ export default function CarCard({ car }: CarCardProps) {
             </div>
             <div className='flex items-center gap-2'>
               <Gauge className='h-4 w-4' />
-              <span className='font-bold'>${car.priceMLC.toLocaleString()} MLC</span>
+              <span className='font-bold'>
+                ${new Intl.NumberFormat('es-ES').format(car.priceMLC)} MLC
+              </span>
             </div>
           </div>
         </div>
