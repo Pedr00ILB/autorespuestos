@@ -5,6 +5,7 @@ import "./globals.css"
 import Navbar from "@/components/navbar"
 import Footer from "@/components/footer"
 import { CartProvider } from "@/lib/cart-context"
+import { AuthProvider } from "@/lib/auth/AuthProvider"
 
 const inter = Inter({ subsets: ["latin"] })
 
@@ -22,13 +23,15 @@ export default function RootLayout({
   return (
     <html lang="es">
       <body className={inter.className}>
-        <CartProvider>
-          <div className="flex min-h-screen flex-col">
-            <Navbar />
-            <div className="flex-1">{children}</div>
-            <Footer />
-          </div>
-        </CartProvider>
+        <AuthProvider>
+          <CartProvider>
+            <div className="flex min-h-screen flex-col">
+              <Navbar />
+              <div className="flex-1">{children}</div>
+              <Footer />
+            </div>
+          </CartProvider>
+        </AuthProvider>
       </body>
     </html>
   )
