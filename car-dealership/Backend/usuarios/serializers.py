@@ -1,4 +1,5 @@
 from rest_framework import serializers
+from django.contrib.auth import get_user_model
 from .models import Usuario, Perfil, Cliente, Empleado
 
 class UsuarioSerializer(serializers.ModelSerializer):
@@ -6,7 +7,7 @@ class UsuarioSerializer(serializers.ModelSerializer):
     password2 = serializers.CharField(write_only=True, required=True, style={'input_type': 'password'})
 
     class Meta:
-        model = User
+        model = Usuario
         fields = [
             'id',
             'username',
@@ -43,10 +44,29 @@ class UsuarioSerializer(serializers.ModelSerializer):
         return attrs
 
     def create(self, validated_data):
+        # Extraer y eliminar password2 ya que no es un campo del modelo
         validated_data.pop('password2', None)
-        password = validated_data.pop('password')
-        user = User.objects.create_user(**validated_data)
-        user.set_password(password)
+        password = validated_data.pop('password', None)
+        
+        # Obtener el modelo de usuario personalizado
+        User = get_user_model()
+        
+        # Generar un nombre de usuario basado en el email si no se proporciona
+        if 'username' not in validated_data:
+            validated_data['username'] = validated_data.get('email').split('@')[0]
+        
+        # Crear el usuario con los datos validados
+        user = User(**validated_data)
+        
+        # Establecer la contraseña de forma segura
+        if password:
+            user.set_password(password)
+        
+        # Configurar valores por defecto
+        user.is_active = True
+        user.es_cliente = True
+        
+        # Guardar el usuario
         user.save()
         return user
 

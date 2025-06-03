@@ -35,7 +35,7 @@ export function RequireAuth({
     }
   }, [isAuthenticated, isLoading, requiredRole, router, redirectTo, user]);
 
-  if (isLoading || !isAuthenticated) {
+  if (isLoading) {
     return (
       <div className="flex items-center justify-center min-h-screen">
         <div className="flex flex-col items-center gap-4">

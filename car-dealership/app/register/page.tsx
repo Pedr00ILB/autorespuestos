@@ -12,8 +12,8 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Checkbox } from "@/components/ui/checkbox"
 import { useToast } from "@/components/ui/use-toast"
+import { useRouter } from 'next/navigation';
 import { useAuth } from '@/lib/auth/AuthProvider';
-import { useAuthRedirect } from '@/hooks/useAuthRedirect';
 import { Loader2 } from 'lucide-react';
 import { TermsLinks } from '@/components/legal/terms-links';
 
@@ -51,12 +51,8 @@ export default function RegisterPage() {
   const [acceptTerms, setAcceptTerms] = useState(false);
   const { register: registerUser } = useAuth();
   const { toast } = useToast();
-  
-  // Redirigir si ya está autenticado
-  const { isAuthenticated, isLoading: isAuthLoading } = useAuthRedirect({
-    redirectIfAuthenticated: true,
-    redirectTo: '/dashboard'
-  });
+  const router = useRouter();
+  const { isAuthenticated } = useAuth();
 
   const {
     register,
@@ -88,8 +84,11 @@ export default function RegisterPage() {
     try {
       setIsLoading(true);
       
-      // Extraer confirmPassword ya que no lo necesitamos para el registro
-      const { confirmPassword, ...userData } = data;
+      // Crear objeto de datos para el registro incluyendo password2
+      const userData = {
+        ...data,
+        password2: data.confirmPassword
+      };
       
       await registerUser(userData);
       
@@ -149,7 +148,7 @@ export default function RegisterPage() {
   };
 
   // Mostrar loader mientras se verifica la autenticación
-  if (isAuthLoading || isAuthenticated) {
+  if (isLoading || isAuthenticated) {
     return (
       <div className="min-h-screen flex items-center justify-center">
         <Loader2 className="h-8 w-8 animate-spin text-primary" />

@@ -1,6 +1,7 @@
 from rest_framework import status
 from rest_framework.views import APIView
 from rest_framework.response import Response
+from rest_framework.renderers import JSONRenderer
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework_simplejwt.tokens import RefreshToken, OutstandingToken, BlacklistedToken
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
@@ -12,23 +13,41 @@ User = get_user_model()
 
 class UserRegistrationView(APIView):
     permission_classes = [AllowAny]
+    serializer_class = UsuarioSerializer
 
-    def post(self, request):
-        serializer = UsuarioSerializer(data=request.data)
-        if serializer.is_valid():
-            user = User.objects.create_user(
-                username=serializer.validated_data['username'],
-                email=serializer.validated_data['email'],
-                password=request.data.get('password'),
-                telefono=serializer.validated_data.get('telefono'),
-                fecha_nacimiento=serializer.validated_data.get('fecha_nacimiento'),
-                es_cliente=True
-            )
+    def post(self, request, *args, **kwargs):
+        # Forzar el renderizado de la respuesta como JSON
+        request.accepted_renderer = JSONRenderer()
+        
+        try:
+            # Hacer una copia mutable del QueryDict
+            data = request.data.copy()
+            
+            # Si no se proporciona username, usar la parte antes del @ del email
+            if 'username' not in data and 'email' in data:
+                data['username'] = data.get('email').split('@')[0]
+                
+            serializer = self.serializer_class(data=data)
+            if serializer.is_valid():
+                # El método create del serializador ya maneja la creación del usuario
+                user = serializer.save()
+                return Response({
+                    'message': 'Usuario registrado exitosamente',
+                    'user': self.serializer_class(user).data
+                }, status=status.HTTP_201_CREATED)
+            
+            # Si hay errores de validación, devolverlos en formato JSON
             return Response({
-                'message': 'Usuario registrado exitosamente',
-                'user': UsuarioSerializer(user).data
-            }, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+                'error': 'Error de validación',
+                'details': serializer.errors
+            }, status=status.HTTP_400_BAD_REQUEST)
+            
+        except Exception as e:
+            # Capturar cualquier otro error y devolverlo en formato JSON
+            return Response({
+                'error': 'Error en el servidor',
+                'details': str(e)
+            }, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 class CustomTokenObtainPairView(TokenObtainPairView):
     def post(self, request, *args, **kwargs):

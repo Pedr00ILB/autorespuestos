@@ -53,13 +53,21 @@ export function useAuthRedirect({
   const router = useRouter();
 
   useEffect(() => {
-    // No hacer nada mientras se está cargando
-    if (isLoading) return;
+    // No hacer nada mientras se está cargando o si estamos en el servidor
+    if (isLoading || typeof window === 'undefined') return;
 
+    // Solo proceder si tenemos un estado de autenticación definido
+    if (isAuthenticated === undefined) return;
+
+    // Evitar bucles de redirección
+    const currentPath = window.location.pathname;
+    
     // Redirigir si la página requiere autenticación y el usuario no está autenticado
     if (requireAuth && !isAuthenticated) {
+      // No redirigir si ya estamos en la página de login
+      if (currentPath === '/login' || currentPath === redirectTo) return;
+      
       // Guardar la ruta actual para redirigir después del login
-      const currentPath = window.location.pathname;
       const redirectUrl = `${redirectTo}?redirect=${encodeURIComponent(currentPath)}`;
       router.push(redirectUrl);
       return;
@@ -67,13 +75,17 @@ export function useAuthRedirect({
 
     // Redirigir si el usuario está autenticado pero la página es solo para invitados
     if (redirectIfAuthenticated && isAuthenticated) {
+      // No redirigir si ya estamos en la página de destino
       const redirectPath = new URLSearchParams(window.location.search).get('redirect') || '/';
+      if (currentPath === redirectPath) return;
+      
       router.push(redirectPath);
       return;
     }
 
     // Verificar si se requiere ser administrador
     if (requireAuth && requireAdmin && isAuthenticated && !user?.es_admin) {
+      if (currentPath === adminRedirectTo) return;
       router.push(adminRedirectTo);
       return;
     }
