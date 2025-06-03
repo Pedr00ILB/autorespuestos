@@ -1,0 +1,8 @@
+car-dealership-frontend/node_modules/dependencies/test/node_modules/request/tests/test-s3.js
+.env
+.env.*
+*.pem
+*.key
+*.crt
+*.cert
+*.p12
